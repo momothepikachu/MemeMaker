@@ -30,6 +30,8 @@
     </div>
   </div>
   <script>
+    window.topLineText = '';
+    window.bottomLineText = ''
     var input1 = document.getElementById('topLineText');
     var input2 = document.getElementById('bottomLineText');
     input1.oninput = textChangeListener;
@@ -69,7 +71,7 @@
     
     function saveFile() {
       window.dataURL = document.querySelector('canvas').toDataURL("image/png");
-      window.open().document.write('<img src="'+window.dataURL+'"/>');
+      window.open().document.write('<img src="'+window.dataURL+'"/>')
     }
     
     function handleFileSelect(evt) {
@@ -88,7 +90,7 @@
         image.onload = function() {
           
           window.imageSrc = this;
-          redrawMeme(window.imageSrc, 'text here', 'and here :-)');
+          redrawMeme(window.imageSrc, null, null);
         }
         
         // Set image data to background image.
