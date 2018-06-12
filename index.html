@@ -47,6 +47,7 @@
         redrawMeme(window.imageSrc, 'Text here', 'and here:-)');
       }
       image.src = origin;
+      image.crossOrigin = "Anonymous";
     }    
     
     function textChangeListener (evt) {
@@ -80,7 +81,8 @@
     }
     
     function saveFile() {
-      window.open(document.querySelector('canvas').toDataURL());
+      window.dataURL = document.querySelector('canvas').toDataURL("image/png");
+      window.open().document.write('<img src="'+window.dataURL+'"/>');
     }
     
     function handleFileSelect(evt) {
@@ -99,3 +101,4 @@
 
 </body>
 </html>
+
