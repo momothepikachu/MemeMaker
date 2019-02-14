@@ -8,24 +8,33 @@
   <meta name="mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <link href="https://fonts.googleapis.com/css?family=VT323" rel="stylesheet">
   <style>
-    #image-container {
-      display: flex;
+    body {
+      background: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI1NiIgaGVpZ2h0PSIxMDAiPgo8cmVjdCB3aWR0aD0iNTYiIGhlaWdodD0iMTAwIiBmaWxsPSIjZjhkMjAzIj48L3JlY3Q+CjxwYXRoIGQ9Ik0yOCA2NkwwIDUwTDAgMTZMMjggMEw1NiAxNkw1NiA1MEwyOCA2NkwyOCAxMDAiIGZpbGw9Im5vbmUiIHN0cm9rZT0iI2ZmZjYyOSIgc3Ryb2tlLXdpZHRoPSIyIj48L3BhdGg+CjxwYXRoIGQ9Ik0yOCAwTDI4IDM0TDAgNTBMMCA4NEwyOCAxMDBMNTYgODRMNTYgNTBMMjggMzQiIGZpbGw9Im5vbmUiIHN0cm9rZT0iI2ZmZTUwMyIgc3Ryb2tlLXdpZHRoPSIyIj48L3BhdGg+Cjwvc3ZnPg==");
     }
 
     #meme-text>* {
       margin: 5px 0;
     }
+
+    h1 {
+      font-family: 'VT323', monospace;
+    }
   </style>
 </head>
 
 <body>
-  <div id="image-container" class="container mt-4 py-2">
+  
+  <div id="image-container" class="container mt-4 py-2 border border-warning rounded bg-warning">
     <div class="row">
-      <div class="col col-md-9 text-center">
+      <h1 class="col text-center display-1">MEME MAKER</h1>
+    </div>
+    <div class="row pb-3">
+      <div class="col col-lg-8 text-center">
           <canvas width="500" height="500"></canvas>
       </div>
-      <div id="meme-text" class="col col-md-3">
+      <div id="meme-text" class="col offset-md-2 col-lg-4 offset-lg-0 py-2">
         <div>
           <input type="file" id="file" aria-label="choose a picture for creating meme"/>  
         </div>      
