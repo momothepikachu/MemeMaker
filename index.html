@@ -2,49 +2,57 @@
 
 <html>
 <head>
-  <title>MemeMaker-Simple</title>
+  <title>MemeMaker</title>
     
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
   <meta name="mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-capable" content="yes">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
   <style>
     #image-container {
       display: flex;
+    }
+
+    #meme-text>* {
+      margin: 5px 0;
     }
   </style>
 </head>
 
 <body>
-
-  <div>
-    <input type="file" id="file" aria-label="choose a picture for creating meme"/>  
-  </div>
-  <div id="image-container">
-    <canvas width="500" height="500"></canvas>
-    <div>
-      <span id="top-line">Top Line:</span><br/>
-      <input id="topLineText" type="text"  aria-labelledby="top-line topLineText"><br/>
-      <span id="bottom-line">Bottom Line:</span><br/>
-      <input id="bottomLineText" type="text" aria-labelledby="bottom-line bottomLineText"><br/>
-      <button id="saveBtn">Save</button>
+  <div id="image-container" class="container mt-4 py-2">
+    <div class="row">
+      <div class="col col-md-9 text-center">
+          <canvas width="500" height="500"></canvas>
+      </div>
+      <div id="meme-text" class="col col-md-3">
+        <div>
+          <input type="file" id="file" aria-label="choose a picture for creating meme"/>  
+        </div>      
+        <span id="top-line">Top Line:</span><br/>
+        <input id="topLineText" type="text"  aria-labelledby="top-line topLineText"><br/>
+        <span id="bottom-line">Bottom Line:</span><br/>
+        <input id="bottomLineText" type="text" aria-labelledby="bottom-line bottomLineText"><br/>
+        <button id="saveBtn" class="btn btn-primary">Save</button>
+      </div>
     </div>
   </div>
   <script>
-    window.topLineText = "";
-    window.bottomLineText = "";
+    window.topLineText = 'title';
+    window.bottomLineText = 'text';
     let input1 = document.getElementById('topLineText');
     let input2 = document.getElementById('bottomLineText');
     input1.oninput = textChangeListener;
     input2.oninput = textChangeListener;
-    document.getElementById('file').addEventListener('change', handleFileSelect, false);
-    document.querySelector('button').addEventListener('click', saveFile, false);
-    originImage('https://s26.postimg.cc/5leezpyll/Capture.png');
+    document.getElementById('file').addEventListener('change', handleFileSelect);
+    document.querySelector('button').addEventListener('click', saveFile);
+    originImage('https://i.postimg.cc/xCw411Z7/Doge.jpg');
 
     function originImage(origin) {
       let image = new Image();
       image.onload = function() {
         window.imageSrc = this;
-        redrawMeme(window.imageSrc, 'Text here', 'and here:-)');
+        redrawMeme(window.imageSrc, window.topLineText, window.bottomLineText);
       }
       image.src = origin;
       image.crossOrigin = "Anonymous";
@@ -64,20 +72,23 @@
     }
     
     function redrawMeme(image, topLine, bottomLine) {
-      // Get Canvas2DContext
       let canvas = document.querySelector('canvas');
       let ctx = canvas.getContext("2d");
-      // Your code here
-      ctx.drawImage(image, 0, 0, canvas.width, canvas.height);
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      image.width>image.height? 
+        [image.height, image.width]= [image.height/image.width*canvas.height, canvas.width]: 
+        [image.height, image.width]= [canvas.height, image.width/image.height*canvas.width];
+      ctx.drawImage(image, 0, 0, image.width, image.height);
+
       ctx.font = '50pt Impact';
       ctx.textAlign = "center";
       ctx.fillStyle = 'white';
       ctx.strokeStyle = 'black';
       ctx.lineWidth = 5;
-      ctx.strokeText(topLine, canvas.width/2, 55);
-      ctx.fillText(topLine, canvas.width/2, 55); 
-      ctx.strokeText(bottomLine, canvas.width/2, 490);
-      ctx.fillText(bottomLine, canvas.width/2, 490);           
+      ctx.strokeText(topLine, canvas.width/2, canvas.height*0.13);
+      ctx.fillText(topLine, canvas.width/2, canvas.height*0.13); 
+      ctx.strokeText(bottomLine, canvas.width/2, image.height*0.98);
+      ctx.fillText(bottomLine, canvas.width/2, image.height*0.98);           
     }
     
     function saveFile() {
@@ -92,7 +103,6 @@
         let data = fileObject.target.result;
         // Create an image object
         originImage.call(this, data)
-        console.log(fileObject.target.result);
       };
       reader.readAsDataURL(file)
     }
